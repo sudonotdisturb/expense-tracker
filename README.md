@@ -4,7 +4,7 @@ Expense Tracker is a tool that enables the easy and quick entry of receipts into
 
 Usage:
 
-`python3 client.py`
+```python3 client.py```
 
 In order to enable this tool for your own Google spreadsheet purposes, follow the steps outlined in [this blog](https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/). After downloading the key in JSON format, name the JSON file "expense-tracker.json" and place it in this project directory. If you would like to use a different name for your JSON file, find the line:
 
