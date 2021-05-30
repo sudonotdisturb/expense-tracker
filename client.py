@@ -77,27 +77,7 @@ class Client:
 		notes = input("Add notes (hit enter to continue): ")
 		receipt.set_notes(notes)
 
-	def sort(self):
-		# Load all worksheet data into a dataframe
-		df = pd.DataFrame(self.worksheet.get_all_records())
-		# test_worksheet = self.spreadsheet.add_worksheet(title="Test", rows="100", cols="5")
-
-		# Get the dates in the dataframe as DateTime objects
-		date_sr = pd.to_datetime(df['Date'])
-
-		# Change the dates to be in YYYY/MM/DD format
-		df['Date'] = date_sr.dt.strftime('%Y/%m/%d')
-
-		# Sort the dates
-		df = df.sort_values(by=['Date'], ascending=True)
-
-		# Change the dates back to MM/DD/YYYY format
-		df['Date'] = date_sr.dt.strftime('%m/%d/%Y')
-
-		# Write the dataframe back to the worksheet
-		self.worksheet.update([df.columns.values.tolist()] + df.values.tolist())
-
-	def run(self):
+	def add_receipt(self):
 		# Get the date for the receipt and verify it is valid
 		date = self.get_date()
 		while not self.is_valid_date(date):
@@ -125,26 +105,66 @@ class Client:
 				receipt.get_item_list(), 						# list of items bought
 				receipt.get_notes()]							# notes
 		
+		print("Adding receipt...")
+
 		# Append row of data to the worksheet
 		self.worksheet.append_row(data, value_input_option='USER_ENTERED')
 		print(receipt)
 		print("Receipt added!")
 
+	def sort(self, colname):
+		# Load all worksheet data into a dataframe
+		df = pd.DataFrame(self.worksheet.get_all_records())
+		# test_worksheet = self.spreadsheet.add_worksheet(title="Test", rows="100", cols="5")
+
+		# Get the dates in the dataframe as DateTime objects
+		date_sr = pd.to_datetime(df['Date'])
+
+		# Change the dates to be in YYYY/MM/DD format
+		df['Date'] = date_sr.dt.strftime('%Y/%m/%d')
+
+		# Sort the dates
+		df = df.sort_values(by=['Date'], ascending=True)
+
+		# Change the dates back to MM/DD/YYYY format
+		df['Date'] = date_sr.dt.strftime('%m/%d/%Y')
+
+		# Write the dataframe back to the worksheet
+		self.worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+
+	def print_receipts(self):
+		# Load all worksheet data into a dataframe
+		df = pd.DataFrame(self.worksheet.get_all_records())
+
+		# Print receipts in dataframe
+		print("\nReceipts: \n")
+		print(df)
+
+	def run(self):
+		# Display menu continuously until user quits
+		while True:
+			print("\n***** Expense Tracker Menu *****\n" +\
+				"  1. Enter a new receipt\n" +\
+				"  2. Sort receipts by date\n" +\
+				"  3. Sort receipts by cost\n" +\
+				"  4. Print receipts\n" +\
+				"  Q. Quit the program")
+			menu_choice = input("Select an option by typing the number: ")
+			if menu_choice == '1':
+				self.add_receipt()
+			elif menu_choice == '2':
+				self.sort('Date')
+			elif menu_choice == '3':
+				# self.sort('Total')
+				print("TODO")
+			elif menu_choice == '4':
+				self.print_receipts()
+			elif menu_choice.lower() == 'Q':
+				break
+			else:
+				print("\nInvalid option!")
+
 
 # Initialize client
 client = Client()
-
-# Allow user to enter as many receipts as desired
-while True:
-	add_receipt = input("Add a new receipt? (y/n) ").lower()
-	if add_receipt == 'n' or add_receipt == 'no':
-		break
-	elif add_receipt == 'y' or add_receipt == 'yes':
-		client.run()
-	else:
-		print("Invalid choice! Please enter \'y\' or \'n\'.")
-
-# Update the spreadsheet to be sorted by date
-print("Sorting receipts...")
-client.sort()
-print("Done!")
+client.run()

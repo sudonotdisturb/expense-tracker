@@ -50,6 +50,7 @@ class Receipt:
 
 		return "\n************** {0} Receipt ****************\n".format(self.store) +\
 				"Date: " + self.date + "\n" +\
-				"Items bought:\n" + item_string +\
+				"Items bought:\n" + item_string + "\n" +\
+				"Total cost: $" + str(round(self.get_total_cost(), 2)) + "\n" +\
 				"Notes: " + self.notes +\
 				"\n**********************************************\n"
