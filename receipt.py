@@ -48,7 +48,8 @@ class Receipt:
 		for i in range(len(self.item_names)):
 			item_string += "- {0:}: ${1:.2f}\n".format(self.item_names[i], self.item_costs[i])
 
-		return "************** {0} Receipt ****************\n".format(self.store) +\
+		return "\n************** {0} Receipt ****************\n".format(self.store) +\
 				"Date: " + self.date + "\n" +\
 				"Items bought:\n" + item_string +\
-				"******************************************"
+				"Notes: " + self.notes +\
+				"\n**********************************************\n"
