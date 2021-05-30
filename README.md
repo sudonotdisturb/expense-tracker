@@ -1,6 +1,6 @@
 # Expense Tracker
 
-Expense Tracker is a tool that enables the easy and quick entry of receipts into a Google spreadsheet for personal finances. For my purpose, the data is sent to a spreadsheet in my personal Google Drive.
+Expense Tracker is a tool that enables the easy and quick entry of receipts into a Google spreadsheet for personal finances. For my purposes, the data is sent to a spreadsheet in my personal Google Drive.
 
 Usage:
 
