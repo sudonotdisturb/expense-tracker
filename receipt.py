@@ -6,7 +6,7 @@ Last modified: May 29, 2021
 
 """
 class Receipt:
-	def __init__(self, date, store, receipt_type = "Personal"):
+	def __init__(self, date, store, receipt_type = "PERSONAL"):
 		self.date = date
 		self.store = store
 		self.items = []
@@ -26,8 +26,12 @@ class Receipt:
 		return self.items
 
 	def get_item_list(self):
-		item_list = [i.get_name() + " (" + str(i.get_cost()) + ")" for i in self.items]
-		return ", ".join(item_list)
+		if self.type == "PERSONAL":
+			item_list = [i.get_name() + " (" + str(i.get_cost()) + ")" for i in self.items]
+			return ', '.join(item_list)
+		else:
+			item_list = [i.get_name() + " (" + str(i.get_cost()) + ") - paid by " + i.get_owner_string() for i in self.items]
+			return "\n".join(item_list)
 
 	def get_total_cost(self):
 		item_costs = [i.get_cost() for i in self.items]

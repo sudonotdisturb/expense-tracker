@@ -77,7 +77,7 @@ class Client:
 
 				if len(attributes) > 2:
 					owners = [owner.strip() for owner in attributes[2].strip().split(',')]
-					receipt.set_type("Shared")
+					receipt.set_type("SHARED")
 
 				# Verify that cost is a number
 				try:
@@ -130,7 +130,7 @@ class Client:
 				store, 											# location
 				'$' + str(round(receipt.get_total_cost(), 2)), 	# total cost
 				receipt.get_item_list(), 						# list of items bought
-				receipt.get_type(),								# type of receipt (Personal or Shared)
+				receipt.get_type(),								# type of receipt (PERSONAL or SHARED)
 				receipt.get_notes()]							# notes
 		
 		print("Adding receipt...")
