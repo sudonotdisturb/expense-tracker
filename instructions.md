@@ -15,15 +15,15 @@ After a successful connection, a menu will be displayed.
 
 Entering '1' at the menu will begin the receipt entry process. Information about the receipt will be asked in the following order:
 
-- Date of purchase
-- Store/location name
-- Items purchased
-- Tax amount
-- Notes about purchase/visit
+1. Date of purchase
+2. Store/location name
+3. Items purchased
+4. Tax amount
+5. Notes about purchase/visit
 
 More information about each is provided below.
 
-### Date of Purchase
+### 1. Date of Purchase
 
 Enter the date of purchase (the date you visited the location/store) as a forward-slash separated date. The format that the program accepts is MM/DD/YYYY.
 
@@ -44,13 +44,23 @@ Invalid date formats:
 2021.12.25
 ```
 
-### Store/Location Name
+### 2. Store/Location Name
 
 Enter the name of the store/location you visited to make the purchase.
 
-### Items Purchased
+### 3. Items Purchased
 
-Enter the owners of the item as a comma-separated list
+Items should be entered in the following format:
+
+```
+item name // price // owners
+```
+
+Enter the name of the item first.
+
+Enter the price of the item without the dollar sign ('$') after the first '//'.
+
+Enter the owners of the item as a comma-separated list after the second '//'. If the item is not a personal item, you can leave out the second '//', as shown in the first "valid item format" example below. This will assume you paid or are paying for that item.
 
 Valid item formats:
 
@@ -74,7 +84,7 @@ Bike // 39 // me + bob + trish
 
 Make sure to enter any tips you gave, as tips will be considered an item as well.
 
-### Tax Amount
+### 4. Tax Amount
 
 Enter the tax as shown on the receipt, without the dollar sign ('$'). Pressing 'Enter' without specifying a tax value will assume tax is $0.00.
 
@@ -94,7 +104,7 @@ Invalid tax formats:
 $19.99
 ```
 
-### Notes
+### 5. Notes
 
 Enter any notes about the visit, items purchased, or store here. Make sure to type the notes without pressing 'Enter' before you are finished,
 as 'Enter' will indicate you are done typing notes.
