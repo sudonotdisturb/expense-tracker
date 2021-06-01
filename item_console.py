@@ -1,5 +1,5 @@
 """
-receipt.py
+item_console.py
 
 Author: Zach Chin
 Last modified: June 1, 2021
