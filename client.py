@@ -2,7 +2,7 @@
 Expense Tracker - client.py
 
 Author: Zach Chin
-Last modified: May 30, 2021
+Last modified: June 1, 2021
 
 Usage: 
 	python3 client.py

@@ -1,3 +1,11 @@
+"""
+receipt.py
+
+Author: Zach Chin
+Last modified: June 1, 2021
+
+"""
+
 from receipt import Receipt, Item
 
 class ItemConsole:

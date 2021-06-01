@@ -2,7 +2,7 @@
 receipt.py
 
 Author: Zach Chin
-Last modified: May 29, 2021
+Last modified: June 1, 2021
 
 """
 class Receipt:
