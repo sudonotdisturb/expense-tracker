@@ -12,6 +12,8 @@ TODO:
 	o Add insert row at proper location rather than needing to sort all at the end
 	o Error trap when no items are entered
 	o Prevent negative numbers
+	o Fix this item format: item // price //
+		- Adds a blank owner
 """
 
 from receipt import Receipt, Item
@@ -41,7 +43,7 @@ class Client:
 			self.worksheet = self.spreadsheet.sheet1
 		# Debugging
 		else:
-			self.worksheet = self.spreadsheet.worksheet("Sheet2") # Test sheet
+			self.worksheet = self.spreadsheet.worksheet("Test") # Test sheet
 		print("Connected successfully to worksheet \"" + str(self.worksheet.title) + "\"!")
 
 	def get_date(self):
