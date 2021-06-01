@@ -74,7 +74,7 @@ class Client:
 				tax = 0.0
 			# Verify that the entered tax is a floating point number
 			try:
-				receipt.add_item(Item('Tax', float(tax), ["Me"]))
+				receipt.add_item(Item('Tax', float(tax)))
 				break
 			except ValueError:
 				tax = input("The given tax is not a number! Enter the tax amount: ")
@@ -119,7 +119,7 @@ class Client:
 		print(receipt)
 		print("Receipt added!")
 
-	def sort(self, colname):
+	def sort_by_date(self):
 		# Load all worksheet data into a dataframe
 		df = pd.DataFrame(self.worksheet.get_all_records())
 		# test_worksheet = self.spreadsheet.add_worksheet(title="Test", rows="100", cols="5")
@@ -138,6 +138,30 @@ class Client:
 
 		# Write the dataframe back to the worksheet
 		self.worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+
+		print("\nSorted!")
+
+	def sort_by_cost(self):
+		# Load all worksheet data into a dataframe
+		df = pd.DataFrame(self.worksheet.get_all_records())
+
+		# If the costs are strings, convert them to floating-point values
+		if df.dtypes['Total'] == "object":
+			df['Total'] = df['Total'].str.replace('$', '', regex=False)
+			df['Total'] = df['Total'].str.replace(',', '', regex=False)
+			df['Total'] = pd.to_numeric(df['Total'],errors='raise')
+
+		# Sort the costs
+		df = df.sort_values(by=['Total'], ascending=True)
+
+		# Change the floats back to currency format
+		df['Total'] = df['Total'].map("${:,.2f}".format)
+
+		# Write the dataframe back to the worksheet
+		self.worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+
+		print("\nSorted!")
+
 
 	def print_receipts(self):
 		# Load all worksheet data into a dataframe
@@ -166,10 +190,9 @@ class Client:
 			if menu_choice == '1':
 				self.add_receipt()
 			elif menu_choice == '2':
-				self.sort('Date')
+				self.sort_by_date()
 			elif menu_choice == '3':
-				# self.sort('Total')
-				print("TODO")
+				self.sort_by_cost()
 			elif menu_choice == '4':
 				self.print_receipts()
 			elif menu_choice == '5':

@@ -61,10 +61,14 @@ class Receipt:
 
 
 class Item:
-	def __init__(self, name, cost, owners):
+	# Constructor
+	def __init__(self, name, cost, owners = None):
 		self.name = name
 		self.cost = cost
-		self.owners = owners
+		if owners == None:
+			self.owners = ['me']
+		else:
+			self.owners = owners
 
 	def get_name(self): 
 		return self.name
