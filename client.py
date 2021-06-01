@@ -5,7 +5,7 @@ Author: Zach Chin
 Last modified: June 1, 2021
 
 Usage: 
-	python3 client.py
+	python3 client.py [-d]
 
 TODO:
 	o Add ability to prevent duplicate entries?
@@ -16,17 +16,17 @@ TODO:
 
 from receipt import Receipt, Item
 from item_console import ItemConsole
+import sys
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 
-DEBUG = 1					# choose whether to use test worksheet or actual worksheet
 SCOPE = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 KEYFILE_NAME = "expense-tracker.json"
 SPREADSHEET = "Expenses"	# specify which spreadsheet to open
 
 class Client:
-	def __init__(self):
+	def __init__(self, debug):
 		# use creds to create a client to interact with the Google Drive API
 		self.scope = SCOPE
 		self.creds = ServiceAccountCredentials.from_json_keyfile_name(KEYFILE_NAME, SCOPE)
@@ -35,9 +35,12 @@ class Client:
 		# Find a workbook by name and open the first sheet
 		print("Connecting to spreadsheet \"" + SPREADSHEET + "\"...")
 		self.spreadsheet = self.client.open(SPREADSHEET)
-		if DEBUG == 0:
+
+		# Not debugging
+		if debug == 0:
 			self.worksheet = self.spreadsheet.sheet1
-		if DEBUG == 1:
+		# Debugging
+		else:
 			self.worksheet = self.spreadsheet.worksheet("Sheet2") # Test sheet
 		print("Connected successfully to worksheet \"" + str(self.worksheet.title) + "\"!")
 
@@ -202,7 +205,23 @@ class Client:
 			else:
 				print("\nInvalid option!")
 
+# Get command-line arguments
+args = sys.argv
+if len(args) == 1:
+	debug = 0
+elif len(args) > 1:
+	arg1 = args[1].lower()
+	if arg1 == "-d":
+		debug = 1
+	else:
+		print("Usage: python3 client.py [debug]")
+		exit()
+else:
+	print("Usage: python3 client.py [debug]")
+	exit()
+
 
 # Initialize client
-client = Client()
+client = Client(debug)
 client.run()
+
