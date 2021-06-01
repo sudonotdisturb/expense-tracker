@@ -15,6 +15,7 @@ TODO:
 """
 
 from receipt import Receipt, Item
+from item_console import ItemConsole
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
@@ -62,30 +63,8 @@ class Client:
 		print("\nEnter your item name and cost (without $ sign) separated by a double slash (//)." +\
 				"\nRead the README for complete help on entering items." +\
 				"\nType \"done\" to quit.")
-		while True:
-			item = input("  New item> ")
-			quit_cmd = item.lower()
-			if quit_cmd == "done" or quit_cmd == "quit" or quit_cmd == "exit":
-				break	
-			# Verify that there is a '//' between the item name and cost
-			try:
-				# Get the name and cost
-				attributes = item.split('//')
-				name = attributes[0].strip()
-				cost = attributes[1].strip()
-				owners = ["Me"]					# owners defaults to "Me"
-
-				if len(attributes) > 2:
-					owners = [owner.strip() for owner in attributes[2].strip().split(',')]
-					receipt.set_type("SHARED")
-
-				# Verify that cost is a number
-				try:
-					receipt.add_item(Item(name, float(cost), owners))
-				except ValueError:
-					print("The given cost is not a number!")
-			except:
-				print("Put the separator \'//\' between the item name and cost!")
+		console = ItemConsole(receipt)
+		console.run()
 
 	def get_tax(self, receipt):
 		tax = input("Enter the tax amount (press enter to continue if no tax): ")

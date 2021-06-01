@@ -16,6 +16,9 @@ class Receipt:
 	def add_item(self, item):
 		self.items.append(item)
 
+	def pop_item(self):
+		self.items.pop()
+
 	def set_type(self, receipt_type):
 		self.type = receipt_type
 
@@ -50,10 +53,10 @@ class Receipt:
 			item_string += "- {0:}: ${1:.2f} (paid by {2})\n".format(i.get_name(), i.get_cost(), i.get_owner_string())
 
 		return "\n************** {0} Receipt ****************\n".format(self.store) +\
-				"Date: " + self.date + "\n" +\
-				"Items bought:\n" + item_string + "\n" +\
-				"Total cost: $" + str(round(self.get_total_cost(), 2)) + "\n" +\
-				"Notes: " + self.notes +\
+				"Date: {0}\n".format(self.date) +\
+				"Items bought:\n{0}\n".format(item_string) +\
+				"Total cost: ${0:.2f}\n".format(round(self.get_total_cost(), 2)) +\
+				"Notes: {0}".format(self.notes) +\
 				"\n**********************************************\n"
 
 
