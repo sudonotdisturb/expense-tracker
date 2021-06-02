@@ -89,13 +89,13 @@ class Client:
 		receipt.set_notes(notes)
 
 	def add_receipt(self):
+		# Get store name
+		store = input("Enter the store name: ")
+
 		# Get the date for the receipt and verify it is valid
 		date = self.get_date()
 		while not self.is_valid_date(date):
 			date = self.get_date()
-
-		# Get store name
-		store = input("Enter the store name: ")
 
 		# Create receipt
 		receipt = Receipt(date, store)
